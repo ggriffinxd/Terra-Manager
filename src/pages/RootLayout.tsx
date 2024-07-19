@@ -1,13 +1,19 @@
-import { Outlet, useLocation } from "react-router-dom";
-import "../globals.css";
+// RootLayout.tsx
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import { theme } from '../styles/theme';
+import "../styles/globals.css";
 
-export default function RootLayout() {
+const RootLayout: React.FC = () => {
   return (
-    <>
-      <h1 style={{ backgroundColor: "#000", color: "#fefefe", height: "12vh" }}>
-        Olá Mundo
-      </h1>
+    <ThemeProvider theme={theme}>
+      <header style={{ backgroundColor: theme.colorsBase.black, color: theme.colorsBase.white, height: '12vh' }}>
+        <h1>Ola Mundo</h1>
+      </header>
       <Outlet />
-    </>
+    </ThemeProvider>
   );
-}
+};
+
+export default RootLayout;
