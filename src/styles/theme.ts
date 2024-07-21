@@ -70,7 +70,7 @@ export const theme = {
     green2: '#248E0B',
     orange: '#Ffa500',
     gray: '#222',
-    gray2: 'rgba(255, 255, 255, 0.2)',
+    gray2: 'rgba(228, 228, 231, 0.65)',
     gray3: '#DBDADA',
     gray4: 'rgba(0, 0, 0, 0.5)',
     gray5: '#C5C5C5',
