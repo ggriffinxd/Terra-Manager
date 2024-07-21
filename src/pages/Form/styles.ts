@@ -9,7 +9,19 @@ export const FormContainer = styled.div`
 
 export const LabelInput = styled.div`
   margin-top: -3rem;
-
+  #inputNumber {
+    font-size: 16px;
+    border-radius: 5px;
+    padding: 10px 0;
+    :enabled {
+      background-color: #fafafa;
+    }
+    :disabled {
+      background-color: #a8a8a8;
+    }
+    width: 100%;
+    border: none;
+  }
   #title {
     font-size: 26px;
     font-weight: 600;
@@ -18,10 +30,6 @@ export const LabelInput = styled.div`
   label {
     font-size: 20px;
     text-align: center;
-  }
-
-  input {
-    margin-right: 12px;
   }
 
   input[type="radio"] {
