@@ -1,6 +1,6 @@
 import React from "react";
 import * as S from "./styles";
-import { TextField, Checkbox, FormControlLabel, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
+import { TextField, Checkbox, FormControlLabel, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Button } from '@mui/material';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { theme } from "../../styles/theme";
@@ -19,11 +19,18 @@ function Login() {
       <S.Container>
         <S.LoginForm>
           <S.Title>Entrar</S.Title>
-          <TextField style={{ borderColor: "#fffff" }} size="small" fullWidth label="email" id="email" />
+          <TextField size="small" fullWidth label="email" id="email" />
           <FormControl fullWidth variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+            <InputLabel htmlFor="outlined-adornment-password"
+              sx={{
+                marginTop: '-6px',
+                '&.MuiInputLabel-shrink': {
+                  marginTop: '0px',
+                },
+              }}
+            >senha</InputLabel>
             <OutlinedInput
-            style={{ display: "flex", justifyContent: "center", textAlign: "center"}}
+              style={{ display: "flex", justifyContent: "center", textAlign: "center" }}
               size="small"
               id="outlined-adornment-password"
               type={showPassword ? 'text' : 'password'}
@@ -39,13 +46,16 @@ function Login() {
                   </IconButton>
                 </InputAdornment>
               }
-              label="Password"
+              label="senha"
             />
           </FormControl>
           <S.CheckboxContainer>
             <FormControlLabel control={<Checkbox />} label="Relembrar" />
-            <Link style={{ color: `${theme.colors.seventh}`, textDecoration: "none"}} to="/register">Esqueceu a senha?</Link>
+            <Link style={{ color: `${theme.colors.seventh}`, textDecoration: "none" }} to="/register">Esqueceu a senha?</Link>
           </S.CheckboxContainer>
+          <Button variant="contained">Acessar</Button>
+          <span style={{ display: "flex", justifyContent: "center" }} >Não tem uma conta?
+            <Link style={{ color: `${theme.colors.seventh}`, textDecoration: "none" }} to="/register">Registre-se</Link> </span>
         </S.LoginForm>
       </S.Container>
     </>
