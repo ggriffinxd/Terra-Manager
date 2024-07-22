@@ -103,5 +103,8 @@ export const theme = {
     fourth: 'rgba(0, 0, 0, 1)',
     fifth: 'rgba(0, 0, 0, 0.1)',
     friday: 'rgba(0, 0, 0, 0.8)'
-  }
+  },
+  backgrounds: {
+    mainBackground: 'url(/backgroundFarm.png)',
+  },
 }
