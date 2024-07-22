@@ -8,7 +8,8 @@ export const Container = styled.div`
   align-items: center;
   min-height: 88vh;
   background-size: cover;
-  background-color: black;
+  object-fit: cover;
+  background-image: ${(props) => props.theme.backgrounds.mainBackground};
 `;
 
 export const LoginForm = styled.div`
@@ -17,7 +18,7 @@ export const LoginForm = styled.div`
   backdrop-filter: blur(10px);
   width: 65vw;
   max-width: 400px;
-  border-radius: 10px;
+  border-radius: 6px;
   background-color: ${(props) => props.theme.colorsBase.gray2};
   padding: 24px;
   box-shadow: 0 4px 9px -4px rgba(0, 0, 0, 0.25);
@@ -58,7 +59,7 @@ export const Form = styled.form`
 
 export const CheckboxContainer = styled.div`
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center;
   .p {
     font-style: normal;

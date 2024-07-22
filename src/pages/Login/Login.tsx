@@ -2,9 +2,10 @@ import React from "react";
 import * as S from "./styles";
 import { TextField, Checkbox, FormControlLabel, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Link } from "react-router-dom";
+import { theme } from "../../styles/theme";
 
 function Login() {
-
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -22,7 +23,7 @@ function Login() {
           <FormControl fullWidth variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
             <OutlinedInput
-            style={{ display: "flex", justifyContent: "center" }}
+            style={{ display: "flex", justifyContent: "center", textAlign: "center"}}
               size="small"
               id="outlined-adornment-password"
               type={showPassword ? 'text' : 'password'}
@@ -43,6 +44,7 @@ function Login() {
           </FormControl>
           <S.CheckboxContainer>
             <FormControlLabel control={<Checkbox />} label="Relembrar" />
+            <Link style={{ color: `${theme.colors.seventh}`, textDecoration: "none"}} to="/register">Esqueceu a senha?</Link>
           </S.CheckboxContainer>
         </S.LoginForm>
       </S.Container>
