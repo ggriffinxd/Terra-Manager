@@ -72,7 +72,7 @@ export const theme = {
     gray: '#222',
     gray2: 'rgba(228, 228, 231, 0.65)',
     gray3: '#DBDADA',
-    gray4: 'rgba(0, 0, 0, 0.5)',
+    gray4: 'rgba(54, 72, 79, 0.90)',
     gray5: '#C5C5C5',
     gray6: '#B2B2B2',
     gray7: 'rgba(0, 0, 0, 0.12)',
@@ -102,7 +102,9 @@ export const theme = {
     third: 'rgba(0, 0, 0, 0.5)',
     fourth: 'rgba(0, 0, 0, 1)',
     fifth: 'rgba(0, 0, 0, 0.1)',
-    friday: 'rgba(0, 0, 0, 0.8)'
+    friday: 'rgba(0, 0, 0, 0.8)',
+    circleShadow: 'inset 0 -1px 4px 0 rgba(0, 0, 0, 0.43)',
+
   },
   backgrounds: {
     mainBackground: 'url(/backgroundFarm.png)',

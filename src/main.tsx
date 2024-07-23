@@ -5,6 +5,7 @@ import RootLayout from "./pages/RootLayout";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import FormRegister from "./pages/Form/FormRegister";
+import RegisterCultivation from "./pages/RegisterCultivation/RegisterCultivation"
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: "formRegister",
         element: <FormRegister />,
+      },
+      {
+        path: "registerCultivation",
+        element: <RegisterCultivation />,
       },
     ],
   },
