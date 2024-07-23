@@ -30,9 +30,7 @@ const LabelInputRadioYesNo: React.FC<LabelInputRadioYesNoProps> = ({
 
   return (
     <S.InputsContent>
-      <label htmlFor="farmOverView" id="title">
-        {title}
-      </label>
+      <h1 id="title">{title}</h1>
       <div>
         <div className={isSelectedInput ? "selected" : ""}>
           <input
@@ -51,7 +49,12 @@ const LabelInputRadioYesNo: React.FC<LabelInputRadioYesNoProps> = ({
             onChange={selectedInput}
           />
           <label htmlFor="no">{labelNot}</label>
-          <Button variant="outlined" endIcon={<SendIcon />} onClick={hideForm}>
+          <Button
+            variant="contained"
+            size="large"
+            endIcon={<SendIcon />}
+            onClick={hideForm}
+          >
             Continuar
           </Button>
         </div>
