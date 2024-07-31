@@ -4,10 +4,15 @@ import * as S from "./styles";
 import { ArrowForward } from "@mui/icons-material";
 import {
   Button,
+  FormControl,
   FormControlLabel,
   InputAdornment,
+  InputLabel,
+  MenuItem,
   Radio,
   RadioGroup,
+  Select,
+  SelectChangeEvent,
   Slider,
   TextField,
 } from "@mui/material";
@@ -33,8 +38,13 @@ const RegisterPlanting: React.FC = () => {
   const [isPhosphorQuantity, setIsPhosphorQuantity] = useState<boolean>(true);
   const [potassiumValue, setPotassiumValue] = useState<string>("");
   const [phosphorValue, setPhosphorValue] = useState<string>("");
-  const [isFormNPKHidden, setIsFormNPKHidden] = useState<boolean>(false);
+  const [isFormNPKHidden, setIsFormNPKHidden] = useState<boolean>(true);
   const [groundHaValue, setGroundHaValue] = useState<string>("");
+  const [typeGround, setTypeGround] = useState<string>("");
+
+  const handleChangeTypeGround = (event: SelectChangeEvent) => {
+    setTypeGround(event.target.value as string);
+  };
 
   function setFormNPKOpen() {
     setIsFormNPKHidden(true);
@@ -62,7 +72,16 @@ const RegisterPlanting: React.FC = () => {
       {isFormNPKHidden ? (
         <S.FormContainerMediumWidth>
           <S.LabelInput>
-            {sharedState ? (
+            {!sharedState && (
+              <LabelInputRadioYesNo
+                title="Sua fazenda contém análise de solo?"
+                labelYes="Sim"
+                labelNot="Não"
+                sharedState={sharedState}
+                setSharedState={setSharedState}
+              />
+            )}
+            {sharedState && (
               <div>
                 <h1 id="title">Análise de NPK</h1>
                 <S.DivLabelInput>
@@ -159,14 +178,6 @@ const RegisterPlanting: React.FC = () => {
                   </Button>
                 </S.DivLabelInput>
               </div>
-            ) : (
-              <LabelInputRadioYesNo
-                title="Sua fazenda contém análise de solo?"
-                labelYes="Sim"
-                labelNot="Não"
-                sharedState={sharedState}
-                setSharedState={setSharedState}
-              />
             )}
           </S.LabelInput>
         </S.FormContainerMediumWidth>
@@ -249,7 +260,106 @@ const RegisterPlanting: React.FC = () => {
                   />
                 </RadioGroup>
               </S.GridCard>
-              <div>Coluna 2</div>
+
+              <S.GridCard style={{ marginTop: "-20px" }}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Tipo de solo
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={typeGround}
+                    label="Tipo de solo"
+                    onChange={handleChangeTypeGround}
+                  >
+                    <MenuItem value={10}>1</MenuItem>
+                    <MenuItem value={20}>2</MenuItem>
+                    <MenuItem value={30}>3</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Tipo de solo
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={typeGround}
+                    label="Tipo de solo"
+                    onChange={handleChangeTypeGround}
+                  >
+                    <MenuItem value={10}>1</MenuItem>
+                    <MenuItem value={20}>2</MenuItem>
+                    <MenuItem value={30}>3</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Tipo de solo
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={typeGround}
+                    label="Tipo de solo"
+                    onChange={handleChangeTypeGround}
+                  >
+                    <MenuItem value={10}>1</MenuItem>
+                    <MenuItem value={20}>2</MenuItem>
+                    <MenuItem value={30}>3</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Tipo de solo
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={typeGround}
+                    label="Tipo de solo"
+                    onChange={handleChangeTypeGround}
+                  >
+                    <MenuItem value={10}>1</MenuItem>
+                    <MenuItem value={20}>2</MenuItem>
+                    <MenuItem value={30}>3</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Tipo de solo
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={typeGround}
+                    label="Tipo de solo"
+                    onChange={handleChangeTypeGround}
+                  >
+                    <MenuItem value={10}>1</MenuItem>
+                    <MenuItem value={20}>2</MenuItem>
+                    <MenuItem value={30}>3</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Tipo de solo
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={typeGround}
+                    label="Tipo de solo"
+                    onChange={handleChangeTypeGround}
+                  >
+                    <MenuItem value={10}>1</MenuItem>
+                    <MenuItem value={20}>2</MenuItem>
+                    <MenuItem value={30}>3</MenuItem>
+                  </Select>
+                </FormControl>
+              </S.GridCard>
+
               <div>Coluna 3</div>
             </S.GridPlacement>
             <Button fullWidth onClick={setFormNPKOpen}>
