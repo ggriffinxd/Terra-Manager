@@ -4,10 +4,12 @@ import * as S from "./styles";
 import { ArrowForward } from "@mui/icons-material";
 import {
   Button,
+  Checkbox,
   FormControl,
   FormControlLabel,
   InputAdornment,
   InputLabel,
+  ListItemText,
   MenuItem,
   Radio,
   RadioGroup,
@@ -15,6 +17,8 @@ import {
   SelectChangeEvent,
   Slider,
   TextField,
+  Chip,
+  Box,
 } from "@mui/material";
 
 const marks = [
@@ -41,9 +45,30 @@ const RegisterPlanting: React.FC = () => {
   const [isFormNPKHidden, setIsFormNPKHidden] = useState<boolean>(true);
   const [groundHaValue, setGroundHaValue] = useState<string>("");
   const [typeGround, setTypeGround] = useState<string>("");
+  const [typeMachine, setTypeMachine] = useState<string[]>([]);
+  const [nitrogenType, setNitrogenType] = useState<string>("");
+  const optionsOfMachines = [
+    "Tratores",
+    "Pulverizadores",
+    "Adubadoras",
+    "Semeadoras",
+    "Colhedoras",
+    "Arados",
+  ];
+
+  const handleChange = (event: SelectChangeEvent<string[]>) => {
+    const {
+      target: { value },
+    } = event;
+    setTypeMachine(typeof value === "string" ? value.split(",") : value);
+  };
 
   const handleChangeTypeGround = (event: SelectChangeEvent) => {
     setTypeGround(event.target.value as string);
+  };
+
+  const handleNitrogenChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNitrogenType(event.target.value);
   };
 
   function setFormNPKOpen() {
@@ -91,9 +116,23 @@ const RegisterPlanting: React.FC = () => {
                   >
                     Nitrogênio (N): Bactérias <ArrowForward />
                   </label>
-                  <input type="radio" name="nitrogen" id="inoc" />
+                  <input
+                    type="radio"
+                    name="nitrogen"
+                    id="inoc"
+                    value="inoc"
+                    checked={nitrogenType === "inoc"}
+                    onChange={handleNitrogenChange}
+                  />
                   <label htmlFor="inoc">Inoc</label>
-                  <input type="radio" name="nitrogen" id="coInoc" />
+                  <input
+                    type="radio"
+                    name="nitrogen"
+                    id="coInoc"
+                    value="coInoc"
+                    checked={nitrogenType === "coInoc"}
+                    onChange={handleNitrogenChange}
+                  />
                   <label htmlFor="coInoc">Co-Inoc</label>
                 </S.DivLabelInput>
                 <S.DivLabelInput>
@@ -208,7 +247,14 @@ const RegisterPlanting: React.FC = () => {
                   id="outlined-basic"
                   label={`Bactérias do tipo:`}
                   sx={{ overflowX: "." }}
-                  value={phosphorValue}
+                  value={
+                    nitrogenType === "inoc"
+                      ? "Inoc"
+                      : nitrogenType === "coInoc"
+                      ? "Co-Inoc"
+                      : ""
+                  }
+                  disabled
                   variant="outlined"
                   fullWidth
                 />
@@ -270,96 +316,51 @@ const RegisterPlanting: React.FC = () => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={typeGround}
-                    label="Tipo de solo"
+                    label="Tipo de solo t"
                     onChange={handleChangeTypeGround}
                   >
-                    <MenuItem value={10}>1</MenuItem>
-                    <MenuItem value={20}>2</MenuItem>
-                    <MenuItem value={30}>3</MenuItem>
+                    <MenuItem value={10}>Arenoso</MenuItem>
+                    <MenuItem value={20}>Média</MenuItem>
+                    <MenuItem value={30}>Argiloso</MenuItem>
+                    <MenuItem value={40}>Muito argiloso</MenuItem>
                   </Select>
                 </FormControl>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">
-                    Tipo de solo
+                  <InputLabel id="multiple-select-label">
+                    Maquinários
                   </InputLabel>
                   <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={typeGround}
-                    label="Tipo de solo"
-                    onChange={handleChangeTypeGround}
+                    labelId="multiple-select-label"
+                    id="multiple-select"
+                    multiple
+                    label="Maquinários m"
+                    value={typeMachine}
+                    onChange={handleChange}
+                    renderValue={(selected) => (
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          gap: "5px",
+                          overflow: "auto",
+                          maxWidth: "100%",
+                        }}
+                      >
+                        {selected.map((value) => (
+                          <Chip key={value} label={value} />
+                        ))}
+                      </Box>
+                    )}
                   >
-                    <MenuItem value={10}>1</MenuItem>
-                    <MenuItem value={20}>2</MenuItem>
-                    <MenuItem value={30}>3</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">
-                    Tipo de solo
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={typeGround}
-                    label="Tipo de solo"
-                    onChange={handleChangeTypeGround}
-                  >
-                    <MenuItem value={10}>1</MenuItem>
-                    <MenuItem value={20}>2</MenuItem>
-                    <MenuItem value={30}>3</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">
-                    Tipo de solo
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={typeGround}
-                    label="Tipo de solo"
-                    onChange={handleChangeTypeGround}
-                  >
-                    <MenuItem value={10}>1</MenuItem>
-                    <MenuItem value={20}>2</MenuItem>
-                    <MenuItem value={30}>3</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">
-                    Tipo de solo
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={typeGround}
-                    label="Tipo de solo"
-                    onChange={handleChangeTypeGround}
-                  >
-                    <MenuItem value={10}>1</MenuItem>
-                    <MenuItem value={20}>2</MenuItem>
-                    <MenuItem value={30}>3</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">
-                    Tipo de solo
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={typeGround}
-                    label="Tipo de solo"
-                    onChange={handleChangeTypeGround}
-                  >
-                    <MenuItem value={10}>1</MenuItem>
-                    <MenuItem value={20}>2</MenuItem>
-                    <MenuItem value={30}>3</MenuItem>
+                    {optionsOfMachines.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        <Checkbox checked={typeMachine.indexOf(option) > -1} />
+                        <ListItemText primary={option} />
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </S.GridCard>
-
               <div>Coluna 3</div>
             </S.GridPlacement>
             <Button fullWidth onClick={setFormNPKOpen}>
