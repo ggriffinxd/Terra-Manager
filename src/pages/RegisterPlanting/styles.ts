@@ -19,6 +19,7 @@ export const GridPlacement = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr; /* Define 3 colunas com larguras iguais */
   gap: 20px; /* Espaçamento entre as colunas */
+  margin: 25px 20px;
 `;
 
 export const LabelInput = styled.div`

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import LabelInputRadioYesNo from "../../components/LabelInputRadioYesNo/LabelInputRadioYesNo";
 import * as S from "./styles";
-import { ArrowForward } from "@mui/icons-material";
+import { Add, ArrowForward } from "@mui/icons-material";
 import {
   Button,
   Checkbox,
@@ -20,6 +20,10 @@ import {
   Chip,
   Box,
 } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { Dayjs } from "dayjs";
 
 const marks = [
   {
@@ -46,7 +50,15 @@ const RegisterPlanting: React.FC = () => {
   const [groundHaValue, setGroundHaValue] = useState<string>("");
   const [typeGround, setTypeGround] = useState<string>("");
   const [typeMachine, setTypeMachine] = useState<string[]>([]);
+  const [typePesticide, setTypePesticide] = useState<string[]>([]);
   const [nitrogenType, setNitrogenType] = useState<string>("");
+  const [machineValueHour, setMachineValueHour] = useState<string>("");
+  const [valueOfDateInitial, setValueOfDateInitial] = useState<Dayjs | null>(
+    null
+  );
+  const [valueOfDateFinally, setValueOfDateFinally] = useState<Dayjs | null>(
+    null
+  );
   const optionsOfMachines = [
     "Tratores",
     "Pulverizadores",
@@ -55,12 +67,24 @@ const RegisterPlanting: React.FC = () => {
     "Colhedoras",
     "Arados",
   ];
+  const optionsOfPesticide = [
+    "Inseticidas",
+    "Herbicidas",
+    "Fungicidas",
+    "Acaricidas",
+  ];
 
-  const handleChange = (event: SelectChangeEvent<string[]>) => {
+  const handleChangeMachines = (event: SelectChangeEvent<string[]>) => {
     const {
       target: { value },
     } = event;
     setTypeMachine(typeof value === "string" ? value.split(",") : value);
+  };
+  const handleChangePesticides = (event: SelectChangeEvent<string[]>) => {
+    const {
+      target: { value },
+    } = event;
+    setTypePesticide(typeof value === "string" ? value.split(",") : value);
   };
 
   const handleChangeTypeGround = (event: SelectChangeEvent) => {
@@ -223,43 +247,51 @@ const RegisterPlanting: React.FC = () => {
       ) : (
         <S.FormContainerLargeWidth>
           <S.LabelInput>
+            <div
+              style={{
+                marginBottom: "20px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                position: "relative",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <Add
+                  fontSize="large"
+                  sx={{
+                    color: "#fff",
+                    backgroundColor: "#000",
+                    border: "1px #000 solid",
+                    borderRadius: "100%",
+                    marginRight: ".6rem",
+                  }}
+                />
+                <h1>Adicione os dados do cultivo de soja</h1>
+              </div>
+              <div style={{ position: "relative" }}>
+                <img
+                  src="/Soy.png"
+                  alt="Soja"
+                  style={{
+                    position: "absolute",
+                    width: "100px",
+                    top: "-60px", // Ajuste conforme necessário para flutuar acima da div
+                    right: "-40px", // Mantém a imagem à direita da div
+                  }}
+                />
+              </div>
+            </div>
             <S.GridPlacement>
               <S.GridCard>
                 <TextField
                   id="outlined-basic"
-                  label="Quantidade de fósforo"
-                  sx={{ overflowX: "." }}
-                  value={phosphorValue}
-                  disabled
-                  variant="outlined"
-                  fullWidth
-                />
-                <TextField
-                  id="outlined-basic"
-                  label="Quantidade de potássio"
-                  sx={{ overflowX: "." }}
-                  value={potassiumValue}
-                  disabled
-                  variant="outlined"
-                  fullWidth
-                />
-                <TextField
-                  id="outlined-basic"
-                  label={`Bactérias do tipo:`}
-                  sx={{ overflowX: "." }}
-                  value={
-                    nitrogenType === "inoc"
-                      ? "Inoc"
-                      : nitrogenType === "coInoc"
-                      ? "Co-Inoc"
-                      : ""
-                  }
-                  disabled
-                  variant="outlined"
-                  fullWidth
-                />
-                <TextField
-                  id="outlined-basic"
+                  type="number"
                   label="Área do plantio"
                   sx={{ overflowX: "." }}
                   value={groundHaValue}
@@ -272,42 +304,6 @@ const RegisterPlanting: React.FC = () => {
                   variant="outlined"
                   fullWidth
                 />
-                <label htmlFor="groundPH">Ph do solo</label>
-                <Slider
-                  min={0}
-                  max={14}
-                  valueLabelDisplay="auto"
-                  defaultValue={7}
-                  marks={marks}
-                  style={{ width: "80%" }}
-                  name="groundPH"
-                />
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-row-radio-buttons-group-label"
-                  name="row-radio-buttons-group"
-                  sx={{
-                    display: "flex",
-                    gap: "1.5rem",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <label>Contém irrigação?</label>
-                  <FormControlLabel
-                    value="yes"
-                    control={<Radio />}
-                    label="Sim"
-                  />
-                  <FormControlLabel
-                    value="no"
-                    control={<Radio />}
-                    label="Não"
-                  />
-                </RadioGroup>
-              </S.GridCard>
-
-              <S.GridCard style={{ marginTop: "-20px" }}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
                     Tipo de solo
@@ -326,28 +322,37 @@ const RegisterPlanting: React.FC = () => {
                   </Select>
                 </FormControl>
                 <FormControl fullWidth>
-                  <InputLabel id="multiple-select-label">
+                  <InputLabel id="multiple-select-label-machines">
                     Maquinários
                   </InputLabel>
                   <Select
-                    labelId="multiple-select-label"
+                    labelId="multiple-select-label-machines"
                     id="multiple-select"
                     multiple
                     label="Maquinários m"
                     value={typeMachine}
-                    onChange={handleChange}
+                    onChange={handleChangeMachines}
                     renderValue={(selected) => (
                       <Box
                         sx={{
                           display: "flex",
                           flexWrap: "wrap",
                           gap: "5px",
-                          overflow: "auto",
+                          overflow: ".",
                           maxWidth: "100%",
                         }}
                       >
                         {selected.map((value) => (
-                          <Chip key={value} label={value} />
+                          <Chip
+                            key={value}
+                            label={value}
+                            variant="outlined"
+                            sx={{
+                              height: "20px",
+                              marginTop: "5px",
+                              fontSize: "14px",
+                            }}
+                          />
                         ))}
                       </Box>
                     )}
@@ -360,12 +365,262 @@ const RegisterPlanting: React.FC = () => {
                     ))}
                   </Select>
                 </FormControl>
+                <FormControl fullWidth>
+                  <InputLabel id="multiple-select-id-pesticide">
+                    Pesticidas
+                  </InputLabel>
+                  <Select
+                    labelId="multiple-select-id-pesticide"
+                    id="multiple-select"
+                    multiple
+                    label="Pesticidas p"
+                    value={typePesticide}
+                    onChange={handleChangePesticides}
+                    renderValue={(selected) => (
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          gap: "5px",
+                          overflow: ".",
+                          maxWidth: "100%",
+                        }}
+                      >
+                        {selected.map((value) => (
+                          <Chip
+                            key={value}
+                            label={value}
+                            variant="outlined"
+                            sx={{
+                              height: "20px",
+                              marginTop: "5px",
+                              fontSize: "14px",
+                            }}
+                          />
+                        ))}
+                      </Box>
+                    )}
+                  >
+                    {optionsOfPesticide.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        <Checkbox
+                          checked={typePesticide.indexOf(option) > -1}
+                        />
+                        <ListItemText primary={option} />
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <TextField
+                  id="outlined-basic"
+                  type="number"
+                  label="Preço do maquinário"
+                  sx={{ overflowX: "." }}
+                  value={machineValueHour}
+                  onChange={(ev) => setMachineValueHour(ev.target.value)}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="start">
+                        Valor por hora
+                      </InputAdornment>
+                    ),
+                  }}
+                  variant="outlined"
+                  fullWidth
+                />
+
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
+                  name="row-radio-buttons-group"
+                  sx={{
+                    display: "flex",
+                    gap: "1.5rem",
+                    justifyContent: "center",
+                    margin: "7px",
+                    alignItems: "center",
+                  }}
+                >
+                  <InputLabel id="demo-row-radio-buttons-group-label">
+                    Contém irrigação?
+                  </InputLabel>
+                  <FormControlLabel
+                    value="yes"
+                    control={<Radio />}
+                    label="Sim"
+                  />
+                  <FormControlLabel
+                    value="no"
+                    control={<Radio />}
+                    label="Não"
+                  />
+                </RadioGroup>
               </S.GridCard>
-              <div>Coluna 3</div>
+
+              <S.GridCard>
+                <TextField
+                  id="outlined-basic"
+                  type="number"
+                  label="Quantidade de Pesticidas"
+                  sx={{ overflowX: "." }}
+                  value={machineValueHour}
+                  onChange={(ev) => setMachineValueHour(ev.target.value)}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="start">kg's</InputAdornment>
+                    ),
+                  }}
+                  variant="outlined"
+                  fullWidth
+                />
+                <TextField
+                  id="outlined-basic"
+                  type="number"
+                  label="Quantidade de sementes"
+                  sx={{ overflowX: "." }}
+                  value={machineValueHour}
+                  onChange={(ev) => setMachineValueHour(ev.target.value)}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="start">kg's</InputAdornment>
+                    ),
+                  }}
+                  variant="outlined"
+                  fullWidth
+                />
+                <TextField
+                  id="outlined-basic"
+                  label="Incidencias comuns de pragas"
+                  sx={{ overflowX: "." }}
+                  value={"Ervas daninha"}
+                  onChange={(ev) => setMachineValueHour(ev.target.value)}
+                  variant="outlined"
+                  fullWidth
+                />
+                <TextField
+                  id="outlined-basic"
+                  label="Observações"
+                  sx={{ overflowX: "." }}
+                  value={""}
+                  onChange={(ev) => setMachineValueHour(ev.target.value)}
+                  variant="outlined"
+                  fullWidth
+                />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="Início do plantio"
+                    value={valueOfDateInitial}
+                    onChange={(newValueDate: Dayjs | null) => {
+                      setValueOfDateInitial(newValueDate);
+                      if (newValueDate) {
+                        setValueOfDateFinally(
+                          newValueDate.add(3, "months").add(16, "days")
+                        );
+                      }
+                    }}
+                    slotProps={{ textField: { variant: "outlined" } }}
+                    format="DD/MM/YY"
+                    sx={{
+                      width: "100%",
+                    }}
+                  />
+                </LocalizationProvider>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="Colheita do plantio"
+                    value={valueOfDateFinally}
+                    disabled
+                    slotProps={{ textField: { variant: "outlined" } }}
+                    format="DD/MM/YY"
+                    sx={{
+                      width: "100%",
+                    }}
+                  />
+                </LocalizationProvider>
+              </S.GridCard>
+              <S.GridCard
+                style={{
+                  marginTop: "-20px",
+                }}
+              >
+                <h4>NPK PART</h4>
+                <TextField
+                  id="outlined-basic"
+                  label="Quantidade de fósforo"
+                  sx={{ overflowX: "." }}
+                  value={phosphorValue ? phosphorValue : "Não possui"}
+                  disabled
+                  variant="outlined"
+                  fullWidth
+                />
+                <TextField
+                  id="outlined-basic"
+                  label="Quantidade de potássio"
+                  sx={{ overflowX: "." }}
+                  value={potassiumValue ? potassiumValue : "Não possui"}
+                  disabled
+                  variant="outlined"
+                  fullWidth
+                />
+                <TextField
+                  id="outlined-basic"
+                  label={`Bactérias do tipo:`}
+                  sx={{ overflowX: "." }}
+                  value={
+                    nitrogenType
+                      ? nitrogenType === "inoc"
+                        ? "Inoc"
+                        : nitrogenType === "coInoc"
+                        ? "Co-Inoc"
+                        : ""
+                      : "Não possui"
+                  }
+                  disabled
+                  variant="outlined"
+                  fullWidth
+                />
+                <label htmlFor="groundPH">Ph do solo</label>
+                <Slider
+                  min={0}
+                  max={14}
+                  step={0.1}
+                  valueLabelDisplay="auto"
+                  defaultValue={7}
+                  marks={marks}
+                  style={{ width: "80%", marginTop: "-20px" }}
+                  name="groundPH"
+                />
+              </S.GridCard>
             </S.GridPlacement>
-            <Button fullWidth onClick={setFormNPKOpen}>
-              Voltar
-            </Button>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "15px",
+              }}
+            >
+              <Button
+                variant="contained"
+                sx={{
+                  width: "40%",
+                  height: "4rem",
+                }}
+                onClick={setFormNPKOpen}
+              >
+                Voltar
+              </Button>
+              <Button
+                color="success"
+                variant="contained"
+                sx={{
+                  width: "60%",
+                  height: "4rem",
+                }}
+                onClick={setFormNPKOpen}
+              >
+                Confirmar
+              </Button>
+            </div>
           </S.LabelInput>
         </S.FormContainerLargeWidth>
       )}
