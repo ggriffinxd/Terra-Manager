@@ -4,7 +4,8 @@ function Home() {
   return (
     <div>
       babamozovo <br />
-      <Link to={"/"}>Para login</Link>
+      <Link to={"/login"}>Para login</Link>
+      <Link to={"/registerCultivation"}>Para registrar cultivo</Link>
     </div>
   );
 }
