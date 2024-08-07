@@ -89,7 +89,7 @@ export const theme = {
     red2: 'rgba(232, 16, 16, 1)',
     red3: 'rgba(255, 204, 205, 1)',
     green3: 'rgba(36, 142, 11, 1)',
-    green4: 'rgba(226, 251, 215, 1)'
+    green4: '#2C2825'
   },
 
   hovers: {
