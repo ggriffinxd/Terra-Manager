@@ -76,7 +76,11 @@ const Login: React.FC = () => {
             Esqueceu a senha?
           </Link>
         </S.CheckboxContainer>
-        <Button variant="contained">Acessar</Button>
+        <Link to={"/registerCultivation"}>
+          <Button variant="contained" fullWidth>
+            Acessar
+          </Button>
+        </Link>
         <span style={{ display: "flex", justifyContent: "center" }}>
           Não tem uma conta?
           <Link
